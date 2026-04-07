@@ -61,17 +61,17 @@ st.markdown("""
 html, body, [class*="css"] { font-family: 'DM Mono', monospace; }
 .stApp { background-color: #09090f; }
 
-[data-testid="metric-container"] {
+[data-testid="metric-container"], [data-testid="stMetric"] {
     background: #16161f; border: 1px solid #1e1e2e;
     border-radius: 12px; padding: 1rem 1.2rem;
 }
-[data-testid="metric-container"] label {
-    color: #6b6b85 !important; font-size: 0.68rem !important;
+[data-testid="metric-container"] label, [data-testid="stMetricLabel"] * {
+    color: #a8a8b8 !important; font-size: 0.68rem !important;
     text-transform: uppercase; letter-spacing: 0.1em;
 }
-[data-testid="metric-container"] [data-testid="stMetricValue"] {
+[data-testid="metric-container"] [data-testid="stMetricValue"], [data-testid="stMetricValue"], [data-testid="stMetricValue"] * {
     font-family: 'Syne', sans-serif !important; font-size: 1.6rem !important;
-    font-weight: 700 !important; color: #e8e8f0 !important;
+    font-weight: 700 !important; color: #ffffff !important;
 }
 [data-testid="stSidebar"] {
     background: #111118 !important; border-right: 1px solid #1e1e2e;
@@ -83,16 +83,16 @@ hr { border-color: #1e1e2e; }
 [data-testid="stTabs"] button {
     font-family: 'DM Mono', monospace !important;
     font-size: 0.82rem !important;
-    color: #6b6b85 !important;
+    color: #a8a8b8 !important;
 }
 [data-testid="stTabs"] button[aria-selected="true"] {
-    color: #7c6aff !important;
-    border-bottom: 2px solid #7c6aff !important;
+    color: #a397ff !important;
+    border-bottom: 2px solid #a397ff !important;
 }
 
 .section-label {
     font-size: 0.68rem; text-transform: uppercase; letter-spacing: 0.14em;
-    color: #7c6aff; margin-bottom: 0.5rem; font-weight: 600;
+    color: #a397ff; margin-bottom: 0.5rem; font-weight: 600;
 }
 
 /* Company profile card */
@@ -102,14 +102,14 @@ hr { border-color: #1e1e2e; }
     transition: border-color 0.2s;
 }
 .co-card:hover { border-color: rgba(124,106,255,0.4); }
-.co-card-name  { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:#e8e8f0; }
-.co-card-type  { font-size:0.66rem; color:#6b6b85; margin-bottom:0.5rem; }
-.co-card-price { font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:700; color:#e8e8f0; }
+.co-card-name  { font-family:'Syne',sans-serif; font-size:1rem; font-weight:700; color:#ffffff; }
+.co-card-type  { font-size:0.66rem; color:#a8a8b8; margin-bottom:0.5rem; }
+.co-card-price { font-family:'Syne',sans-serif; font-size:1.35rem; font-weight:700; color:#ffffff; }
 .co-card-up      { color:#4fffb0; font-size:0.73rem; }
 .co-card-down    { color:#ff4f7b; font-size:0.73rem; }
-.co-card-neutral { color:#6b6b85; font-size:0.73rem; }
-.co-meta { font-size:0.68rem; color:#6b6b85; margin-top:0.55rem; line-height:1.9; }
-.co-meta b { color:#c8c8d8; }
+.co-card-neutral { color:#a8a8b8; font-size:0.73rem; }
+.co-meta { font-size:0.68rem; color:#a8a8b8; margin-top:0.55rem; line-height:1.9; }
+.co-meta b { color:#ffffff; }
 
 /* Intelligence cards */
 .intel-card {
@@ -127,22 +127,22 @@ hr { border-color: #1e1e2e; }
 }
 .intel-opportunity .intel-card-title { color:#4fffb0; }
 .intel-threat      .intel-card-title { color:#ff4f7b; }
-.intel-card-text { font-size:0.78rem; color:#c8c8d8; line-height:1.8; }
+.intel-card-text { font-size:0.78rem; color:#e0e0e0; line-height:1.8; }
 
 /* Sentiment badge */
 .badge-positive { background:rgba(79,255,176,0.15); color:#4fffb0; border:1px solid rgba(79,255,176,0.3); padding:3px 10px; border-radius:999px; font-size:0.65rem; }
 .badge-negative { background:rgba(255,79,123,0.15); color:#ff4f7b; border:1px solid rgba(255,79,123,0.3); padding:3px 10px; border-radius:999px; font-size:0.65rem; }
-.badge-neutral  { background:rgba(107,107,133,0.15); color:#6b6b85; border:1px solid rgba(107,107,133,0.3); padding:3px 10px; border-radius:999px; font-size:0.65rem; }
+.badge-neutral  { background:rgba(107,107,133,0.25); color:#a8a8b8; border:1px solid rgba(168,168,184,0.4); padding:3px 10px; border-radius:999px; font-size:0.65rem; }
 
 /* Summary box */
 .summary-box {
     background: rgba(124,106,255,0.07); border: 1px solid rgba(124,106,255,0.25);
     border-radius: 14px; padding: 1.3rem 1.5rem; margin-bottom: 1.2rem;
-    font-size: 0.82rem; color: #c8c8d8; line-height: 1.9;
+    font-size: 0.82rem; color: #e0e0e0; line-height: 1.9;
 }
 .summary-box-title {
     font-family:'Syne',sans-serif; font-size:0.78rem; font-weight:700;
-    color:#7c6aff; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;
+    color:#a397ff; text-transform:uppercase; letter-spacing:0.1em; margin-bottom:0.5rem;
 }
 
 /* Recommendation box */
@@ -272,10 +272,10 @@ with st.sidebar:
         st.rerun()
 
     st.markdown(
-        "<div style='font-size:0.65rem;color:#6b6b85;line-height:1.9;margin-top:0.5rem'>"
-        "Market data: <b style='color:#c8c8d8'>yfinance</b><br>"
-        "AI insights: <b style='color:#c8c8d8'>HuggingFace</b><br>"
-        "MCP tools: <b style='color:#c8c8d8'>FastMCP</b><br>"
+        "<div style='font-size:0.65rem;color:#a8a8b8;line-height:1.9;margin-top:0.5rem'>"
+        "Market data: <b style='color:#ffffff'>yfinance</b><br>"
+        "AI insights: <b style='color:#ffffff'>HuggingFace</b><br>"
+        "MCP tools: <b style='color:#ffffff'>FastMCP</b><br>"
         "Cache TTL: 15 minutes"
         "</div>", unsafe_allow_html=True,
     )
@@ -284,7 +284,7 @@ with st.sidebar:
 st.markdown(
     "<h1 style='font-family:Syne,sans-serif;font-size:1.9rem;margin-bottom:0.15rem'>"
     "🧠 Real-Time Industry Insight & Strategic Intelligence</h1>"
-    "<div style='color:#6b6b85;font-size:0.73rem;margin-bottom:1.2rem'>"
+    "<div style='color:#a8a8b8;font-size:0.73rem;margin-bottom:1.2rem'>"
     "Live market data · AI-powered competitive analysis · MCP tool architecture"
     "</div>",
     unsafe_allow_html=True,
@@ -517,7 +517,7 @@ with tab1:
     for d in data:
         with st.expander(f"📄  {d['name']} ({d['symbol']})"):
             st.markdown(
-                f"<div style='color:#c8c8d8;font-size:0.8rem;line-height:1.9'>"
+                f"<div style='color:#e0e0e0;font-size:0.8rem;line-height:1.9'>"
                 f"{d['description']}</div>", unsafe_allow_html=True,
             )
             cm = st.columns(4)
@@ -533,7 +533,7 @@ with tab1:
 with tab2:
     st.markdown("### 🧠 AI-Powered Competitive Intelligence")
     st.markdown(
-        "<div style='color:#6b6b85;font-size:0.75rem;margin-bottom:1.2rem'>"
+        "<div style='color:#a8a8b8;font-size:0.75rem;margin-bottom:1.2rem'>"
         "Uses FastMCP tools to gather data, then sends it to a HuggingFace LLM "
         "to generate strategic opportunities, threats, and recommendations."
         "</div>", unsafe_allow_html=True,
@@ -546,8 +546,8 @@ with tab2:
                             use_container_width=True, type="primary")
     with col_info:
         st.markdown(
-            "<div style='padding-top:0.6rem;font-size:0.72rem;color:#6b6b85'>"
-            f"Will analyze: <b style='color:#c8c8d8'>"
+            "<div style='padding-top:0.6rem;font-size:0.72rem;color:#a8a8b8'>"
+            f"Will analyze: <b style='color:#ffffff'>"
             f"{', '.join(selected_names[:5])}{'...' if len(selected_names)>5 else ''}"
             f"</b> via MCP → HuggingFace pipeline"
             "</div>", unsafe_allow_html=True,
@@ -574,8 +574,8 @@ with tab2:
 
     if result is None:
         st.markdown(
-            "<div style='text-align:center;padding:3rem;color:#6b6b85;font-size:0.82rem'>"
-            "Click <b style='color:#7c6aff'>⚡ Run Intelligence Analysis</b> above "
+            "<div style='text-align:center;padding:3rem;color:#a8a8b8;font-size:0.82rem'>"
+            "Click <b style='color:#a397ff'>⚡ Run Intelligence Analysis</b> above "
             "to generate AI-powered insights for the selected companies."
             "</div>", unsafe_allow_html=True,
         )
@@ -661,6 +661,18 @@ with tab2:
                 stock = co.get("stock", {})
                 label = sent.get("label", "Neutral")
                 score = sent.get("score", 0)
+                
+                if score >= 0.6:
+                    outlook = "Strongly Bullish 🚀"
+                elif score >= 0.2:
+                    outlook = "Slightly Optimistic 📈"
+                elif score > -0.2:
+                    outlook = "Mixed / Neutral ⚖️"
+                elif score > -0.6:
+                    outlook = "Slightly Cautious 📉"
+                else:
+                    outlook = "Strongly Bearish ⚠️"
+
                 badge_cls = f"badge-{label.lower()}"
                 color_map = {"Positive": "#4fffb0", "Negative": "#ff4f7b", "Neutral": "#6b6b85"}
                 bar_color = color_map.get(label, "#6b6b85")
@@ -673,47 +685,67 @@ with tab2:
                         <div style='margin:0.4rem 0'>
                             <span class='{badge_cls}'>{label}</span>
                         </div>
-                        <div style='font-size:0.65rem;color:#6b6b85;margin-top:0.4rem'>
-                            Score: {score:+.2f}
+                        <div style='font-size:0.75rem;color:#e8e8f0;margin-top:0.6rem;font-weight:600'>
+                            Outlook: <span style='color:{bar_color}'>{outlook}</span>
                         </div>
                         <div style='background:#1e1e2e;border-radius:999px;height:5px;margin-top:0.5rem;overflow:hidden'>
                             <div style='background:{bar_color};width:{bar_pct}%;height:100%;border-radius:999px'></div>
                         </div>
                         <div style='font-size:0.63rem;color:#6b6b85;margin-top:0.4rem'>
-                            +{sent.get('positive_signals',0)} positive &nbsp;
-                            -{sent.get('negative_signals',0)} negative signals
+                            Detected <b>{sent.get('positive_signals',0)}</b> growth indicators vs <b>{sent.get('negative_signals',0)}</b> risk factors.
                         </div>
                     </div>""", unsafe_allow_html=True)
 
-        # ── Sentiment bar chart ───────────────────────────────────────────────
+        # ── Strategic Matrix ──────────────────────────────────────────────────
         if valid:
             st.markdown("---")
-            st.markdown("<div class='section-label'>Sentiment Score by Company</div>",
+            st.markdown("<div class='section-label'>Strategic Matrix: AI Sentiment vs Market Momentum</div>",
                         unsafe_allow_html=True)
 
-            sent_names  = [c["name"].split()[0] for c in valid]
-            sent_scores = [c.get("sentiment", {}).get("score", 0) for c in valid]
-            sent_colors = [
-                "#4fffb0" if s > 0.1 else "#ff4f7b" if s < -0.1 else "#6b6b85"
-                for s in sent_scores
-            ]
+            scatter_names = [c["name"].split()[0] for c in valid]
+            scatter_x = [c.get("sentiment", {}).get("score", 0) for c in valid]
+            scatter_y = [c.get("stock", {}).get("change_pct", 0) or 0 for c in valid]
+            
+            # Bubble size based on market cap (minimum size 10)
+            scatter_size = [max((c.get("stock", {}).get("market_cap", 0) or 0) / 1e9, 10) for c in valid]
 
-            fig_sent = go.Figure(go.Bar(
-                x=sent_names, y=sent_scores,
-                marker_color=sent_colors,
-                text=[f"{s:+.2f}" for s in sent_scores],
-                textposition="outside",
-            ))
-            fig_sent.add_hline(y=0, line_dash="dot", line_color="#1e1e2e")
-            fig_sent.update_layout(
+            fig_matrix = px.scatter(
+                x=scatter_x, 
+                y=scatter_y, 
+                text=scatter_names,
+                size=scatter_size,
+                color=scatter_names,
+                color_discrete_sequence=COLORS,
+            )
+
+            fig_matrix.update_traces(
+                textposition="top center", 
+                marker_line_width=1, 
+                marker_line_color="#1e1e2e",
+                hovertemplate="<b>%{text}</b><br>Sentiment: %{x:+.2f}<br>Momentum: %{y:+.2f}%<extra></extra>"
+            )
+            
+            # Quadrant lines
+            fig_matrix.add_hline(y=0, line_dash="dash", line_color="#3a3a50", opacity=0.5)
+            fig_matrix.add_vline(x=0, line_dash="dash", line_color="#3a3a50", opacity=0.5)
+
+            # Quadrant Annotations
+            fig_matrix.add_annotation(x=0.98, y=0.98, xref="paper", yref="paper", text="Momentum Leaders 🚀", showarrow=False, font=dict(color="#4fffb0", size=11), xanchor="right", yanchor="top", opacity=0.7)
+            fig_matrix.add_annotation(x=0.98, y=0.04, xref="paper", yref="paper", text="Value / Recovery 💎", showarrow=False, font=dict(color="#6ab4ff", size=11), xanchor="right", yanchor="bottom", opacity=0.7)
+            fig_matrix.add_annotation(x=0.02, y=0.98, xref="paper", yref="paper", text="High Risk / Overvalued ⚠️", showarrow=False, font=dict(color="#ffc06a", size=11), xanchor="left", yanchor="top", opacity=0.7)
+            fig_matrix.add_annotation(x=0.02, y=0.04, xref="paper", yref="paper", text="Underperforming 📉", showarrow=False, font=dict(color="#ff4f7b", size=11), xanchor="left", yanchor="bottom", opacity=0.7)
+
+            # Dynamically adjust y-axis range to ensure bubbles fit
+            max_abs_y = max([abs(y) for y in scatter_y] + [0.5]) * 1.5 
+
+            fig_matrix.update_layout(
                 paper_bgcolor="#16161f", plot_bgcolor="#16161f",
                 font_color="#6b6b85", showlegend=False,
-                margin=dict(t=20,b=10,l=10,r=10), height=280,
-                xaxis=dict(showgrid=False),
-                yaxis=dict(showgrid=True, gridcolor="#1e1e2e",
-                           range=[-1.2, 1.2], zeroline=False),
+                margin=dict(t=30, b=30, l=10, r=10), height=420,
+                xaxis=dict(showgrid=False, gridcolor="#1e1e2e", range=[-1.2, 1.2], zeroline=False, title="⬅️ Bearish AI Sentiment &nbsp; &nbsp; | &nbsp; &nbsp; Bullish AI Sentiment ➡️"),
+                yaxis=dict(showgrid=True, gridcolor="#1e1e2e", zeroline=False, ticksuffix="%", range=[-max_abs_y, max_abs_y], title="Today's Market Momentum"),
             )
-            st.plotly_chart(fig_sent, use_container_width=True)
+            st.plotly_chart(fig_matrix, use_container_width=True)
 
         # ── Raw JSON expander ─────────────────────────────────────────────────
         with st.expander("🔍 View Raw MCP + LLM Output"):
@@ -722,7 +754,7 @@ with tab2:
 # ── FOOTER ────────────────────────────────────────────────────────────────────
 st.markdown("---")
 st.markdown(
-    "<div style='text-align:center;color:#6b6b85;font-size:0.67rem;padding:0.8rem 0'>"
+    "<div style='text-align:center;color:#a8a8b8;font-size:0.67rem;padding:0.8rem 0'>"
     "Strategic Intelligence System · yfinance · HuggingFace · FastMCP · Streamlit"
     "</div>", unsafe_allow_html=True,
 )
