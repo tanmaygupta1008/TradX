@@ -10,6 +10,7 @@ Run:
 """
 
 import asyncio
+import threading
 import json
 import numpy as np
 import pandas as pd
@@ -19,6 +20,30 @@ import streamlit as st
 import yfinance as yf
 
 from mcp_client import run_intelligence
+
+def run_async(coro):
+    """Safely run async coroutine in environments with running event loops (like HuggingFace Spaces)."""
+    try:
+        loop = asyncio.get_running_loop()
+    except RuntimeError:
+        loop = None
+
+    if loop and loop.is_running():
+        result = []
+        error = []
+        def _runner():
+            try:
+                result.append(asyncio.run(coro))
+            except Exception as e:
+                error.append(e)
+        t = threading.Thread(target=_runner)
+        t.start()
+        t.join()
+        if error:
+            raise error[0]
+        return result[0]
+    else:
+        return asyncio.run(coro)
 
 # ── PAGE CONFIG ───────────────────────────────────────────────────────────────
 st.set_page_config(
@@ -538,7 +563,7 @@ with tab2:
                     name: ALL_COMPANIES.get(name, name)
                     for name in selected_names
                 }
-                result = asyncio.run(run_intelligence(companies_for_mcp))
+                result = run_async(run_intelligence(companies_for_mcp))
                 st.session_state["intel_result"] = result
             except Exception as e:
                 st.error(f"Analysis failed: {e}")
