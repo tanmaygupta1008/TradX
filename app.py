@@ -1,4 +1,4 @@
-"""
+﻿"""
 app.py  —  Real-Time Industry Insight & Strategic Intelligence System
 ======================================================================
 Streamlit dashboard with two tabs:

@@ -31,7 +31,7 @@ from huggingface_hub import InferenceClient
 load_dotenv()
 
 HF_TOKEN    = os.getenv("HF_TOKEN", "")
-HF_MODEL    = os.getenv("HF_MODEL",    "meta-llama/Llama-3.1-8B-Instruct")
+HF_MODEL    = os.getenv("HF_MODEL",    "meta-llama/Llama-3.3-70B-Instruct")
 HF_PROVIDER = os.getenv("HF_PROVIDER", "together")
 
 
@@ -56,29 +56,31 @@ def _extract_text(result) -> str:
 def call_huggingface(user_prompt: str) -> str:
     if not HF_TOKEN:
         return json.dumps({
-            "summary": "HuggingFace token not set. Add HF_TOKEN to your .env file.",
-            "opportunities": ["Set up HF_TOKEN in .env to enable AI insights"],
-            "threats":       ["Missing API token limits intelligence capabilities"],
-            "positioning":   "N/A — token required",
-            "recommendation": "Add your HuggingFace token to .env and restart.",
+            "summary": "HuggingFace token not set.",
+            "opportunities": [],
+            "threats": [],
+            "positioning": "N/A",
+            "recommendation": "Add HF_TOKEN to .env",
         })
 
     try:
         client = InferenceClient(
             provider=HF_PROVIDER,
-            api_key=HF_TOKEN,      # ← use api_key= not token=
+            api_key=HF_TOKEN,
         )
 
-        # Use chat.completions.create — works with ALL providers
         completion = client.chat.completions.create(
             model=HF_MODEL,
             messages=[
                 {
                     "role": "system",
                     "content": (
-                        "You are a strategic business intelligence analyst. "
-                        "Always respond with valid JSON only — no markdown, "
-                        "no explanation, no extra text. Output only the JSON object."
+                        "You are a strategic business intelligence analyst.\n"
+                        "Return ONLY valid JSON.\n"
+                        "Do NOT include markdown, HTML, or explanations.\n"
+                        "Do NOT truncate output.\n"
+                        "Ensure the JSON is COMPLETE and properly closed.\n"
+                        "No trailing commas."
                     )
                 },
                 {
@@ -86,7 +88,7 @@ def call_huggingface(user_prompt: str) -> str:
                     "content": user_prompt
                 }
             ],
-            max_tokens=700,
+            max_tokens=1200,
             temperature=0.4,
         )
 
@@ -97,13 +99,9 @@ def call_huggingface(user_prompt: str) -> str:
         return json.dumps({
             "summary": f"HuggingFace inference error: {err}",
             "opportunities": [],
-            "threats":       [err],
-            "positioning":   "Error",
-            "recommendation": (
-                f"Check HF_TOKEN, HF_MODEL='{HF_MODEL}', and "
-                f"HF_PROVIDER='{HF_PROVIDER}' in .env. "
-                "Ensure the model is supported by the chosen provider."
-            ),
+            "threats": [err],
+            "positioning": "Error",
+            "recommendation": "Check HF config",
         })
 
 
@@ -132,26 +130,36 @@ def build_prompt(companies_data: list) -> str:
 
     companies_block = "\n".join(summaries)
 
-    return f"""Analyze the following real-time company data and provide a competitive intelligence report.
+    return f"""Analyze the following real-time company data and produce a DEEP competitive intelligence report.
 
 COMPANY DATA:
 {companies_block}
 
-Respond ONLY with this exact JSON structure (no extra text, no markdown):
+INSTRUCTIONS:
+- Each opportunity and threat MUST be highly specific, data-driven, and analytical.
+- Use actual metrics (price change %, revenue, sentiment, market cap).
+- Each bullet MUST be 2–3 sentences long.
+- Structure each bullet as:
+  "Opportunity: <insight> | Evidence: <data> | Impact: <business implication>"
+- Avoid generic statements like "invest in X".
+- Focus on competitive advantage, risks, and market positioning.
+
+Respond ONLY with this exact JSON structure (no markdown, no explanation):
+
 {{
-  "summary": "2-3 sentence overall market summary",
+  "summary": "3-4 sentence deep market analysis with reasoning",
   "opportunities": [
-    "Specific opportunity 1 based on the data",
-    "Specific opportunity 2 based on the data",
-    "Specific opportunity 3 based on the data"
+    "Opportunity: ... | Evidence: ... | Impact: ...",
+    "Opportunity: ... | Evidence: ... | Impact: ...",
+    "Opportunity: ... | Evidence: ... | Impact: ..."
   ],
   "threats": [
-    "Specific threat 1 based on the data",
-    "Specific threat 2 based on the data",
-    "Specific threat 3 based on the data"
+    "Threat: ... | Evidence: ... | Impact: ...",
+    "Threat: ... | Evidence: ... | Impact: ...",
+    "Threat: ... | Evidence: ... | Impact: ..."
   ],
-  "positioning": "Which company appears strongest and why, in 1-2 sentences",
-  "recommendation": "Top strategic recommendation for decision makers in 1-2 sentences"
+  "positioning": "Compare companies and explain who is strongest with justification",
+  "recommendation": "Actionable strategic recommendation with reasoning"
 }}"""
 
 
@@ -215,7 +223,8 @@ async def run_intelligence(companies: dict) -> dict:
     per_company = []
 
     # ── Step 1: Call MCP server tools for each company ──────────────────────
-    async with Client("mcp_server.py") as client:
+    server_path = os.path.abspath(os.path.join(os.path.dirname(__file__), "mcp_server.py"))
+    async with Client(server_path) as client:
         for name, ticker in companies.items():
             try:
                 stock_result = await client.call_tool("get_stock_data",   {"ticker_symbol": ticker})
